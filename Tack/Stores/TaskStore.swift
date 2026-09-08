@@ -54,12 +54,25 @@ public final class TaskStore: ObservableObject {
     // MARK: - Mutations
 
     @discardableResult
-    public func addTask(title: String, notes: String = "", dueAt: Date? = nil, list: TaskList? = nil) -> TaskItem {
+    public func addTask(title: String, notes: String = "", dueAt: Date? = nil, list: TaskList? = nil, tagNames: [String] = []) -> TaskItem {
         let ctx = container.mainContext
         let inbox = ensureInbox(in: ctx)
         let target = list ?? inbox
         let item = TaskItem(title: title, notes: notes, list: target, dueAt: dueAt)
         item.order = nextOrder(in: ctx)
+        // Resolve tags by name (create if missing)
+        var tags: [Tag] = []
+        for name in tagNames where !name.isEmpty {
+            let descriptor = FetchDescriptor<Tag>(predicate: #Predicate<Tag> { $0.name == name })
+            if let existing = try? ctx.fetch(descriptor).first {
+                tags.append(existing)
+            } else {
+                let new = Tag(name: name)
+                ctx.insert(new)
+                tags.append(new)
+            }
+        }
+        item.tags = tags
         ctx.insert(item)
         try? ctx.save()
         refresh()

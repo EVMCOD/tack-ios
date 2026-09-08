@@ -1,0 +1,13 @@
+v1.0 — Primo rilascio
+
+Un'app di attività nativa per iPhone e iPad con sincronizzazione bidirezionale con Notion e Obsidian, tre widget interattivi e cattura rapida in linguaggio naturale.
+
+Cosa c'è dentro:
+- Oggi, Posta in arrivo, Elenchi, Stats, Impostazioni
+- Quick Add con parser in linguaggio naturale (#tag, !priorità, domani 17, in 3 giorni)
+- Widget: Today, Inbox, Stats (piccolo, medio, grande)
+- AppIntents: Aggiungi, Completa, Cattura rapida (Siri, Scorciatoie, foglio di condivisione)
+- Notion OAuth PKCE + sincronizzazione bidirezionale
+- Vault Obsidian + round-trip con frontmatter YAML
+- Contatore di streak e grafico a 14 giorni
+- Sei lingue: inglese, spagnolo, francese, tedesco, italiano, portoghese brasiliano

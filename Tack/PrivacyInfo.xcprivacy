@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- No user tracking, no tracking domains, no data collection -->
+    <key>NSPrivacyTracking</key>
+    <false/>
+    <key>NSPrivacyTrackingDomains</key>
+    <array/>
+    <key>NSPrivacyCollectedDataTypes</key>
+    <array/>
+
+    <!-- Reason API categories we touch. Each entry declares an "API reason code"
+         Apple uses to audit privacy. Add only what your code calls. -->
+    <key>NSPrivacyAccessedAPITypes</key>
+    <array>
+        <!-- Disk space: needed to know how much room is left for SwiftData store,
+             vault, and Notion caches (1F66.1 = Required to extend to free space). -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPIDiskSpace</string>
+            <key>NSPrivacyAccessedAPIReasons</key>
+            <array>
+                <string>E174.1</string>
+            </array>
+        </dict>
+        <!-- User defaults: only used by our AppSettings (@AppStorage) for theme +
+             onboarding flag. CA1007 = Access info from same app, per documentation. -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPIUserDefaults</string>
+            <key>NSPrivacyAccessedAPIReasons</key>
+            <array>
+                <string>CA1007</string>
+            </array>
+        </dict>
+        <!-- File timestamp: reading vault metadata in the Obsidian sync engine.
+             C617.1 = Display to the user (lastModifiedDate). -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPIFileTimestamp</string>
+            <key>NSPrivacyAccessedAPIReasons</key>
+            <array>
+                <string>C617.1</string>
+            </array>
+        </dict>
+        <!-- System boot time: not used today, left for future scheduled-refresh logic.
+             35F9.1 = Absolute time across launches. -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPISystemBootTime</string>
+            <key>NSPrivacyAccessedAPIReasons</key>
+            <array>
+                <string>35F9.1</string>
+            </array>
+        </dict>
+    </array>
+</dict>
+</plist>

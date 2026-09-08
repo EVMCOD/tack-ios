@@ -1,0 +1,26 @@
+Tack est une app de tâches claire et adaptative pour iPhone et iPad. Elle associe un flux quotidien précis à une synchronisation native avec Notion et Obsidian — vos tâches vivent là où vous pensez vraiment.
+
+CAPTUREZ VITE
+Tapez naturellement. Tack interprète vos mots : « Acheter du lait demain 17h #courses » devient une tâche structurée — date, étiquettes et priorité inférés en millisecondes. Ajoutez depuis l'écran verrouillé, Siri, la feuille de partage ou le quick add de l'app.
+
+AUJOURD'HUI, BOÎTE DE RÉCEPTION, LISTES, STATS
+Cinq vues, zéro friction. Aujourd'hui affiche ce qui est réellement dû. La Boîte de réception garde les captures brutes. Les Listes sont vos propres regroupements. Stats gamifie la pratique avec un compteur de série et un graphique sur quatorze jours.
+
+WIDGETS
+Today, Inbox et Stats — petit, moyen et grand. Touchez pour terminer. Appui long pour accéder à la vue correspondante. Ils s'actualisent à chaque heure et se rechargent à chaque modification.
+
+SIRI, RACCOURCIS, FEUILLE DE PARTAGE
+« Ajouter à Tack : relire le doc de design »
+« Marquer comme terminée dans Tack : sortir la poubelle »
+Une intent Quick Capture pour la Feuille de partage. Trois intents livrés avec l'app ; d'autres à venir.
+
+NOTION, OBSIDIAN, RIEN D'AUTRE
+Un moteur de synchronisation unique et tranché — parlez à Notion quand vos tâches vivent dans une base de données, ou à votre coffre Obsidian quand elles vivent en markdown. Bidirectionnel, tolérant aux pannes, frontmatter YAML sur chaque fichier. Pas de verrouillage : vos tâches sont du markdown valide et des lignes Notion valides avant que Tack n'y touche.
+
+DÉTAILS DE DESIGN
+- Thèmes clair et sombre avec tokens sémantiques (la famille `TK`)
+- Six langues intégrées : anglais, espagnol, français, allemand, italien, portugais brésilien
+- Shell adaptatif : onglets sur iPhone, split sur iPad
+- 100% hors-ligne. Vos tâches vivent dans SwiftData ; iCloud les sauvegarde automatiquement
+
+Tack est construite avec SwiftUI natif et SwiftData. Pas de serveur. Pas de publicité. Pas de tracking.

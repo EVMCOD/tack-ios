@@ -1,0 +1,4 @@
+app_identifier("app.tack.ios")
+apple_id(ENV["APPLE_ID_FOR_TACK"] || "valerosenrique@gmail.com")
+team_id("KADHS6P8PY")
+itc_team_id(ENV["TACK_ITC_TEAM_ID"])

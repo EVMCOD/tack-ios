@@ -92,7 +92,8 @@ struct QuickAddSheet: View {
                         let new = store.addTask(
                             title: parsedTitle,
                             notes: "",
-                            dueAt: hasDue ? due : nil
+                            dueAt: hasDue ? due : nil,
+                            tagNames: parsedTags
                         )
                         Task { await integrations.propagateToIntegrations(new) }
                         dismiss()

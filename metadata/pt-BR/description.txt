@@ -1,0 +1,26 @@
+Tack é um app de tarefas focado e adaptativo para iPhone e iPad. Ele combina um fluxo diário cuidadoso com sincronização nativa com Notion e Obsidian — suas tarefas vivem onde você realmente pensa.
+
+CAPTURE RÁPIDO
+Digite naturalmente. Tack interpreta suas palavras: "Comprar leite amanhã 17h #compras" vira uma tarefa estruturada — data, tags e prioridade deduzidos em milissegundos. Adicione pela tela bloqueada, Siri, folha de compartilhamento ou quick add do app.
+
+HOJE, CAIXA, LISTAS, STATS
+Cinco vistas, zero atrito. Hoje mostra o que está realmente em dia. A Caixa guarda capturas brutas. As Listas são seus próprios agrupamentos. Stats gamifica a prática com um contador de sequência e um gráfico de catorze dias.
+
+WIDGETS
+Today, Inbox e Stats — pequeno, médio e grande. Toque para concluir. Toque longo para pular para a vista. Atualizam a cada hora e a cada mudança.
+
+SIRI, ATALHOS, FOLHA DE COMPARTILHAMENTO
+"Adicionar ao Tack: revisar o doc de design"
+"Marcar como feito no Tack: tirar o lixo"
+Uma intent Quick Capture para a Folha de compartilhamento. Três intents já no app; mais a caminho.
+
+NOTION, OBSIDIAN, NADA MAIS
+Um motor de sincronização único e opinativo — fala com o Notion quando suas tarefas vivem em um banco de dados, ou com seu cofre Obsidian quando vivem em markdown. Bidirecional, tolerante a falhas, frontmatter YAML em cada arquivo. Sem lock-in: suas tarefas são markdown válido e linhas Notion válidas antes de Tack tocar nelas.
+
+DETALHES DE DESIGN
+- Temas claro e escuro com tokens semânticos (a família `TK`)
+- Seis idiomas integrados: inglês, espanhol, francês, alemão, italiano, português do Brasil
+- Shell adaptativo: abas no iPhone, split no iPad
+- 100% offline. Suas tarefas vivem em SwiftData; o iCloud faz backup automaticamente
+
+Tack é construído com SwiftUI nativo e SwiftData. Sem servidor. Sem anúncios. Sem tracking.

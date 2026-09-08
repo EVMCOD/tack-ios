@@ -1,0 +1,15 @@
+---
+test_target_name: Tack
+workspace: Tack.xcodeproj
+scheme: Tack
+devices:
+  - iPhone 17 Pro
+  - iPhone Air
+languages:
+  - en-US
+  - es-ES
+  - fr-FR
+  - de-DE
+  - it-IT
+  - pt-BR
+---

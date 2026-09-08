@@ -1,124 +1,59 @@
 # Tack
 
-> A focused, adaptive task app for iPhone, iPad, and macOS. Notion & Obsidian native. Widgets that pull their weight.
+> A focused, adaptive task app for iPhone and iPad. Notion & Obsidian native. Widgets that pull their weight.
 
 ## What is it?
 
-A native todo app built around three ideas:
+A native todo app that pairs a sharp everyday workflow with bidirectional **Notion** and **Obsidian** sync — so your tasks live where you actually think.
 
-1. **Capture in one tap** — the floating `+` button on iPhone, the prominent sidebar CTA on macOS. Natural language parsing turns "Buy milk tomorrow 5pm #groceries" into a structured task.
-2. **Today / Inbox / Lists / Stats / Settings** — five views, no friction. Tasks naturally find their home; `Stats` gamifies with a streak counter and last 14-day chart.
-3. **Sync where you think** — Notion for team databases, Obsidian for personal vaults. Bidirectional. YAML frontmatter on every markdown file so other tools (Dataview, Templater) can read them.
+- Capture in one tap with **natural language** parsing: "Buy milk tomorrow 5pm #groceries"
+- Five tabs: Today, Inbox, Lists, Stats, Settings
+- Three interactive Home Screen **widgets**
+- **AppIntents** for Siri, Shortcuts, and the Share Sheet
+- Six built-in **locales**
+- 100% **offline**, no tracking, no ads, no server
 
 ## Stack
 
-- **SwiftUI** (iOS 17.0 / macOS 14.0)
-- **SwiftData** for persistence (App Group → shared with widget)
-- **WidgetKit** + interactive `AppIntent` widgets
-- **AppIntents** framework for Siri, Shortcuts, Spotlight
-- **xcodegen** for project generation
+- SwiftUI (iOS 17.0+, iPadOS 17.0+, macOS in v1.1)
+- SwiftData with App Group storage
+- WidgetKit + interactive `AppIntent`
+- AppIntents framework
+- xcodegen, Fastlane
 - 6 locales: en, es, fr, de, it, pt-BR
 
 ## Features
 
 ### Core
-- ✅ Today (smart default), Inbox (raw captures), Lists (your own grouping), Stats, Settings
-- ✅ Quick Add sheet with live natural language parsing
+
+- ✅ Today (smart default), Inbox (raw captures), Lists (your own grouping), **Stats** (Swift Charts), Settings
+- ✅ Quick Add with natural language parser
   - `#tag` → tags
   - `today`, `tomorrow`, `next monday|...` → date
   - `in 3 days`, `in 2h`, `in 30m` → relative
-  - `5pm`, `17:30` → time (today or tomorrow if past)
+  - `5pm`, `17:30` → time
   - `!high`, `!med`, `!low`, `!urgent` → priority
 - ✅ Search across title, notes, list, tags
-- ✅ Onboarding flow (3 slides)
+- ✅ Onboarding flow (3 slides; integrations step included)
 - ✅ Light / Dark / system theme picker
 - ✅ iCloud sync toggle (CloudKit — v1.1 wired)
 
 ### Widgets
+
 - ✅ TodayWidget (small/medium/large)
 - ✅ InboxWidget (small/medium)
 - ✅ StatsWidget (small/medium) — streak + last 7 days chart
 
 ### Integrations
-- ✅ **Notion** — OAuth PKCE flow, REST client, bidirectional sync with status + due date
-- ✅ **Obsidian** — Vault folder picker via security-scoped bookmark, YAML frontmatter markdown serializer, two-way sync
+
+- ✅ **Notion** — OAuth PKCE + bidirectional sync with status + due date
+- ✅ **Obsidian** — Vault folder picker via security-scoped bookmark + YAML-frontmatter markdown
 
 ### AppIntents
+
 - ✅ `AddTaskIntent` — Siri / Shortcut / share extension. Parses natural language.
 - ✅ `CompleteTaskIntent` — Mark task done by title query.
 - ✅ `QuickCaptureIntent` — Open app, prefill Quick Add from elsewhere.
-
-## Architecture
-
-```
-tack-ios/
-├── project.yml                     # xcodegen (universal config; iOS target v1.0, macOS v1.1)
-├── README.md
-├── ICON.md                         # App icon design spec
-├── Tack/
-│   ├── TackApp.swift               # @main entry, scenePhase observers
-│   ├── Theme/Theme.swift           # TK tokens (palette, radius, spacing, typography, icon, spring, gradient)
-│   ├── Models/                     # SwiftData @Model classes
-│   │   ├── TaskItem.swift
-│   │   ├── TaskList.swift
-│   │   └── Tag.swift
-│   ├── Stores/
-│   │   ├── TaskStore.swift         # @MainActor, App Group container
-│   │   └── AppSettings.swift       # @AppStorage prefs
-│   ├── Views/
-│   │   ├── RootView.swift          # iOS TabView / macOS NavigationSplitView + onboarding gate
-│   │   ├── OnboardingView.swift    # 3-slide first launch
-│   │   ├── TodayView.swift
-│   │   ├── InboxView.swift
-│   │   ├── ListsView.swift
-│   │   ├── StatsView.swift         # Swift Charts: streak, 14-day, by-list
-│   │   ├── SearchView.swift
-│   │   ├── TaskDetailView.swift
-│   │   ├── TaskRowView.swift
-│   │   ├── QuickAddSheet.swift     # NL parsing preview
-│   │   ├── EmptyStateView.swift
-│   │   ├── SettingsView.swift
-│   │   └── Integrations/
-│   │       ├── NotionSettingsView.swift
-│   │       └── ObsidianSettingsView.swift
-│   ├── Integrations/
-│   │   ├── IntegrationHub.swift    # facade orchestrator
-│   │   ├── Notion/
-│   │   │   ├── NotionClient.swift
-│   │   │   ├── NotionAuthService.swift
-│   │   │   └── NotionSyncService.swift
-│   │   └── Obsidian/
-│   │       ├── ObsidianVault.swift
-│   │       └── ObsidianSyncService.swift
-│   ├── Intents/                    # AppIntents + AppShortcuts
-│   ├── Services/
-│   │   ├── KeychainStore.swift
-│   │   ├── MarkdownSerializer.swift
-│   │   ├── NaturalLanguageParser.swift
-│   │   └── Logger.swift
-│   ├── Resources/
-│   │   ├── Assets.xcassets/
-│   │   └── Localizable.xcstrings   # 6 locales, 16 strings
-│   ├── Info.plist
-│   └── Tack.entitlements
-├── TackWidget/                     # Widget extension target
-│   ├── TackWidgetBundle.swift
-│   ├── TodayWidget.swift
-│   ├── InboxWidget.swift
-│   ├── StatsWidget.swift
-│   ├── TimelineProvider.swift
-│   ├── TaskEntry.swift
-│   ├── WidgetTaskLoader.swift
-│   ├── Info.plist
-│   └── TackWidget.entitlements
-├── TackUITests/
-│   └── TackUITests.swift
-└── scripts/
-    ├── bootstrap.sh                # xcodegen + xcodebuild sanity
-    ├── generate.sh                 # xcodegen only
-    ├── build.sh                    # build for iPhone simulator
-    └── test.sh                     # run UI tests
-```
 
 ## Quick start
 
@@ -133,24 +68,43 @@ Or pure CLI:
 ./scripts/build.sh
 ```
 
+## Shipping
+
+For the full App Store submission playbook, see **[SUBMIT.md](./SUBMIT.md)**.
+
+In short:
+
+```bash
+./scripts/lint.sh           # gate check (build + privacy + metadata)
+./scripts/screenshot.sh     # capture App Store screenshots
+./scripts/archive.sh        # build signed .ipa
+./scripts/submit.sh         # upload to App Store Connect
+```
+
+Or chained:
+
+```bash
+fastlane ios ship
+```
+
 ## Roadmap
 
-- [x] v1.0 — Core + Stats + Search + NL Parser + 6 locales
-- [x] v1.0 — Integrations: Notion (OAuth + bidirectional), Obsidian (folder + bidirectional)
+- [x] v1.0 — Core + Stats + Search + NL Parser + 6 locales + ASO copy in 6 languages
+- [x] v1.0 — Integrations: Notion + Obsidian, two-way
 - [ ] v1.1 — macOS native target, CloudKit sync, recurrence engine, Apple Reminders import
-- [ ] v1.2 — Watch app, Calendar export (.ics), Notification Center widget
+- [ ] v1.2 — Watch app, Calendar export (.ics)
 - [ ] v2.0 — Shared lists (collaboration)
 
 ## Build status
 
 ```
-$ ./scripts/build.sh
-** BUILD SUCCEEDED **
+$ ./scripts/lint.sh
+🟢  All gate checks passed.
 
 Errors:   0
-Warnings: 8 (4 Swift 6 TimelineProvider readiness, 4 AppIcon.png expected missing)
-Files:    43 Swift + project.yml + xcstrings + plists + entitlements + assets + 4 scripts
-LOC:      3932 Swift
+Warnings: 4 (Swift 6 TimelineProvider readiness, inertes)
+Files:    45 Swift + project.yml + xcprivacy + xcstrings + plists + entitlements + assets + 4 scripts
+LOC:      ~4000 Swift
 ```
 
 ## License

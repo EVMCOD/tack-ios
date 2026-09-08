@@ -1,0 +1,13 @@
+v1.0 — Sortie initiale
+
+Une app de tâches native pour iPhone et iPad avec synchronisation bidirectionnelle Notion et Obsidian, trois widgets interactifs et capture rapide en langage naturel.
+
+Au programme :
+- Aujourd'hui, Boîte de réception, Listes, Stats, Réglages
+- Quick Add avec analyse en langage naturel (#tag, !priorité, demain 17h, dans 3 jours)
+- Widgets : Today, Inbox, Stats (petit, moyen, grand)
+- AppIntents : Ajouter, Terminer, Capture rapide (Siri, Raccourcis, feuille de partage)
+- Notion OAuth PKCE + synchronisation bidirectionnelle
+- Coffre Obsidian + aller-retour avec frontmatter YAML
+- Compteur de série et graphique sur 14 jours
+- Six langues : anglais, espagnol, français, allemand, italien, portugais brésilien

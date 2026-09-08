@@ -1,0 +1,110 @@
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+    setup_ci if ENV["CI"]
+  end
+
+  desc "Verify clean build + run UI tests"
+  lane :test do
+    scan(
+      project: "Tack.xcodeproj",
+      scheme: "Tack",
+      destination: "platform=iOS Simulator,name=iPhone 17 Pro",
+      derived_data_path: "./build/derived",
+      output_directory: "./build/test_output",
+      clean: true
+    )
+  end
+
+  desc "Archive for App Store distribution"
+  lane :archive do
+    sync_code_signing(
+      type: "app-store",
+      app_identifier: ["app.tack.ios", "app.tack.ios.widget"],
+      readonly: false
+    )
+    gym(
+      project: "Tack.xcodeproj",
+      scheme: "Tack",
+      configuration: "Release",
+      output_directory: "./build",
+      output_name: "Tack.ipa",
+      archive_path: "./build/Tack.xcarchive",
+      export_method: "app-store",
+      include_symbols: false,
+      clean: true
+    )
+  end
+
+  desc "Capture App Store screenshots"
+  lane :screenshots do
+    capture_screenshots(
+      project: "Tack.xcodeproj",
+      scheme: "Tack",
+      output_directory: "./build/screenshots",
+      output_simulator_dir: "./build/screenshots/sim",
+      clear_previous_screenshots: true,
+      override_status_bar: true,
+      devices: [
+        "iPhone 17 Pro",
+        "iPhone Air"
+      ],
+      languages: [
+        "en-US",
+        "es-ES",
+        "fr-FR",
+        "de-DE",
+        "it-IT",
+        "pt-BR"
+      ]
+    )
+  end
+
+  desc "Upload metadata + binary to App Store Connect (NOT submit)"
+  lane :upload do
+    deliver(
+      app_identifier: "app.tack.ios",
+      username: ENV["APPLE_ID_FOR_TACK"] || "valerosenrique@gmail.com",
+      team_id: "KADHS6P8PY",
+      ipa: "./build/Tack.ipa",
+      metadata_path: "./metadata",
+      screenshots_path: "./build/screenshots",
+      skip_binary_upload: false,
+      skip_screenshots: false,
+      skip_metadata: false,
+      skip_app_version_update: false,
+      submit_for_review: false,
+      automatic_release: false,
+      precheck_include_in_app_purchases: false,
+      clean_screenshots: true,
+      force: true,
+      run_precheck_before_submit: true,
+      reject_if_possible: true
+    )
+  end
+
+  desc "Full ship lane: test → archive → screenshots → upload"
+  lane :ship do
+    test
+    archive
+    screenshots
+    upload
+  end
+
+  desc "Register + push the bundle ID + widget extension + App Group"
+  lane :register do
+    produce(
+      app_identifier: "app.tack.ios",
+      app_name: "Tack",
+      language: "en-US",
+      enable_services: {
+        app_group: :on
+      }
+    )
+  end
+
+  error do |lane, exception|
+    UI.error("Lane #{lane} failed: #{exception.message}")
+  end
+end
