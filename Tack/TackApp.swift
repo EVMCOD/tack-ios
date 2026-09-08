@@ -11,6 +11,8 @@ struct TackApp: App {
     init() {
         // Register AppIntents shortcut phrases as soon as possible.
         TackAppShortcuts.updateAppShortcutParameters()
+        // Seed demo data on first launch so the UI looks inhabited, not empty.
+        TaskStore.shared.seedDemoDataOnFirstLaunch()
     }
 
     var body: some Scene {

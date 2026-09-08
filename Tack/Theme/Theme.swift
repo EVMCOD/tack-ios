@@ -203,6 +203,22 @@ struct TKHeroStyle: ViewModifier {
     }
 }
 
+struct TKAppearStyle: ViewModifier {
+    @State private var appeared: Bool = false
+    let delay: Double
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(appeared ? 1 : 0)
+            .offset(y: appeared ? 0 : 10)
+            .onAppear {
+                withAnimation(TK.Spring.gentle.delay(delay)) {
+                    appeared = true
+                }
+            }
+    }
+}
+
 extension View {
     func tkCard(elevated: Bool = false) -> some View {
         modifier(TKCardStyle(elevated: elevated))
@@ -219,16 +235,8 @@ extension View {
     /// Soft entrance animation for list rows. Pair with `.tkAppear(index: 0)` etc.
     func tkAppear(index: Int, total: Int = 12) -> some View {
         let clamped = max(0, min(index, total - 1))
-        let delay = Double(clamped) * 0.025
-        return self
-            .opacity(0)
-            .offset(y: 8)
-            .animation(TK.Spring.gentle.delay(delay), value: index)
-            .onAppear {
-                withAnimation(TK.Spring.gentle.delay(delay)) {
-                    // Trigger redraw with full opacity
-                }
-            }
+        let delay = Double(clamped) * 0.040
+        return modifier(TKAppearStyle(delay: delay))
     }
 
     func tkHoverable() -> some View {

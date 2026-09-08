@@ -141,6 +141,69 @@ public final class TaskStore: ObservableObject {
         }
     }
 
+    /// Seeds a small set of demo tasks so the app looks alive on first launch
+    /// — empty UIs feel broken. No-op when the user already has data.
+    @discardableResult
+    public func seedDemoTasksIfFirstLaunch() -> Bool {
+        let ctx = container.mainContext
+        let existing = (try? ctx.fetchCount(FetchDescriptor<TaskItem>())) ?? 0
+        guard existing == 0 else { return false }
+        let inbox = self.inbox
+        let personal = (try? ctx.fetch(FetchDescriptor<TaskList>(predicate: #Predicate { $0.name == "Personal" })).first) ?? inbox
+        let work = (try? ctx.fetch(FetchDescriptor<TaskList>(predicate: #Predicate { $0.name == "Work" })).first) ?? inbox
+
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: .now)
+        func date(_ off: Int, hour h: Int = 9) -> Date { cal.date(byAdding: .day, value: off, to: today)!.addingTimeInterval(TimeInterval(h * 3600)) }
+
+        let demos: [(title: String, notes: String, list: TaskList?, due: Date?, tags: [String], done: Bool)] = [
+            ("Review PR #482 — onboarding flow", "Touch the sign-up screen for the iOS app + dismiss button styling.", work, date(0, hour: 17), ["#work", "#focus"], false),
+            ("Run SwiftData migration smoke test", "Wipe test store, recreate with v1 schema, ensure no-data state still renders.", work, date(0, hour: 14), ["#qa"], true),
+            ("Call dentist, confirm Thursday 9:30", "", nil, date(1, hour: 10), ["#personal"], false),
+            ("Push to TestFlight once build signs", "Right after Xcode signs the bundle — use Transporter or `fastlane ios upload`.", work, date(-1, hour: 9), ["#release"], false),
+            ("Read ‘Designing Data-Intensive Apps’ ch. 7", "Skip to timestamp 11:42 if running short on time.", nil, nil, ["#learning"], false),
+            ("Pick up dry cleaning on the way home", "", personal, date(0, hour: 19), ["#personal"], false),
+            ("Migrate Notion OAuth to v1.1", "Defer Notion until post-launch; document the path in OB/notes/", work, date(3, hour: 10), ["#later"], false),
+        ]
+
+        for (idx, d) in demos.enumerated() {
+            let t = TaskItem(title: d.title, notes: d.notes, list: d.list, dueAt: d.due)
+            t.order = idx
+            t.status = d.done ? .done : .open
+            if d.done { t.completedAt = Date.now.addingTimeInterval(-Double.random(in: 0...3600)) }
+            ctx.insert(t)
+            // attach tags
+            var tags: [Tag] = []
+            for name in d.tags.map({ $0.dropFirst() }) {
+                let name = String(name)
+                if let existing = try? ctx.fetch(FetchDescriptor<Tag>(predicate: #Predicate<Tag> { $0.name == name })).first {
+                    tags.append(existing)
+                } else {
+                    let tg = Tag(name: name)
+                    ctx.insert(tg)
+                    tags.append(tg)
+                }
+            }
+            t.tags = tags
+        }
+        try? ctx.save()
+        refresh()
+        return true
+    }
+
+    /// One-shot bootstrapper used by `TackApp.init` — guarantees demo content shows
+    /// on first launch while leaving the user's real store alone after that.
+    public func seedDemoDataOnFirstLaunch() {
+        let key = "app.tack.didSeedDemoData.v1"
+        let defaults = UserDefaults.standard
+        if !defaults.bool(forKey: key) {
+            if seedDemoTasksIfFirstLaunch() {
+                defaults.set(true, forKey: key)
+            }
+        }
+    }
+
+
     // MARK: - Store URL (App Group)
 
     private static func storeURL() -> URL {

@@ -1,10 +1,12 @@
 import SwiftUI
 
-/// Reusable empty / placeholder view. Used in Today, Inbox, Search, etc.
+/// Reusable empty / placeholder view. Premium treatment: radial-gradient glow
+/// behind the icon, generous spacing, optional primary CTA.
 struct EmptyStateView: View {
     let system: String
     let title: String
     let subtitle: String
+    var tint: Color = TK.Palette.accent
     var action: (label: String, perform: () -> Void)? = nil
 
     init(system: String, title: String, subtitle: String) {
@@ -13,10 +15,18 @@ struct EmptyStateView: View {
         self.subtitle = subtitle
     }
 
-    init(system: String, title: String, subtitle: String, actionLabel: String, perform: @escaping () -> Void) {
+    init(system: String, title: String, subtitle: String, tint: Color) {
         self.system = system
         self.title = title
         self.subtitle = subtitle
+        self.tint = tint
+    }
+
+    init(system: String, title: String, subtitle: String, tint: Color = TK.Palette.accent, actionLabel: String, perform: @escaping () -> Void) {
+        self.system = system
+        self.title = title
+        self.subtitle = subtitle
+        self.tint = tint
         self.action = (actionLabel, perform)
     }
 
@@ -24,33 +34,42 @@ struct EmptyStateView: View {
         VStack(spacing: TK.Spacing.md) {
             ZStack {
                 Circle()
-                    .fill(TK.Palette.accentMuted)
-                    .frame(width: 88, height: 88)
-                Image(systemName: system)
-                    .font(.system(size: 36, weight: .light))
-                    .foregroundStyle(TK.Palette.accent)
+                    .fill(
+                        RadialGradient(
+                            colors: [tint.opacity(0.40), tint.opacity(0.0)],
+                            center: .center, startRadius: 6, endRadius: 130
+                        )
+                    )
+                    .frame(width: 220, height: 220)
+                ZStack {
+                    Circle()
+                        .fill(TK.Palette.surfaceHigh)
+                        .frame(width: 96, height: 96)
+                    Image(systemName: system)
+                        .font(.system(size: 40, weight: .light))
+                        .foregroundStyle(tint)
+                }
             }
             Text(title)
-                .font(.title2.weight(.semibold))
+                .font(.system(size: 22, weight: .bold, design: .rounded))
                 .foregroundStyle(TK.Palette.textStrong)
+                .multilineTextAlignment(.center)
             Text(subtitle)
                 .multilineTextAlignment(.center)
                 .font(.callout)
                 .foregroundStyle(TK.Palette.textMuted)
-                .frame(maxWidth: 320)
+                .frame(maxWidth: 340)
                 .padding(.horizontal, TK.Spacing.lg)
             if let action {
                 Button(action: { action.perform() }) {
-                    Text(action.label)
+                    Label(action.label, systemImage: "plus.circle.fill")
                         .font(.callout.weight(.semibold))
                         .padding(.horizontal, TK.Spacing.lg)
-                        .padding(.vertical, TK.Spacing.sm)
-                        .background(
-                            Capsule().fill(TK.Palette.accent)
-                        )
+                        .padding(.vertical, TK.Spacing.sm + 2)
+                        .background(Capsule().fill(tint))
                         .foregroundStyle(.white)
                 }
-                .buttonStyle(.tkPress)
+                .buttonStyle(.tkPress(tint: tint))
                 .padding(.top, TK.Spacing.xs)
             }
         }
@@ -63,8 +82,10 @@ struct EmptyStateView: View {
     EmptyStateView(
         system: "checkmark.seal.fill",
         title: "Inbox is empty",
-        subtitle: "Captures appear here as soon as you add them."
-    )
+        subtitle: "Captures appear here as soon as you add them.",
+        tint: TK.Palette.success,
+        actionLabel: "Add a task"
+    ) {}
     .background(TK.Palette.bgDeep)
     .preferredColorScheme(.dark)
 }
