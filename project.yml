@@ -1,0 +1,161 @@
+name: Tack
+options:
+  bundleIdPrefix: app.tack
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: en
+  groupSortPosition: top
+  createIntermediateGroups: true
+  xcodeVersion: "15.4"
+
+# Locales shipped in v1.0
+knownRegions:
+  - en
+  - es
+  - fr
+  - de
+  - it
+  - pt-BR
+  - Base
+
+configs:
+  Debug: debug
+  Release: release
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: KADHS6P8PY
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_STRICT_CONCURRENCY: minimal
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    SWIFT_EMIT_LOC_STRINGS: YES
+    GENERATE_INFOPLIST_FILE: NO
+    ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: "AccentColor"
+    ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon"
+    ENABLE_PREVIEWS: YES
+    OTHER_SWIFT_FLAGS: "-Xfrontend -warn-long-function-bodies=300"
+
+targets:
+  Tack:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: Tack
+    dependencies:
+      - target: TackWidget
+    info:
+      path: Tack/Info.plist
+      properties:
+        CFBundleDisplayName: Tack
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: en
+        CFBundleExecutable: $(EXECUTABLE_NAME)
+        CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
+        CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
+        LSRequiresIPhoneOS: true
+        UILaunchScreen:
+          UIColorName: ""
+          UIImageName: ""
+        UIRequiredDeviceCapabilities:
+          - arm64
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+          - UIInterfaceOrientationPortraitUpsideDown
+        UIUserInterfaceStyle: ""
+        CFBundleURLTypes:
+          - CFBundleURLName: app.tack
+            CFBundleURLSchemes: [tack]
+        NSUserActivityTypes:
+          - AddTaskIntent
+          - CompleteTaskIntent
+          - QuickCaptureIntent
+        NSHumanReadableCopyright: "© 2026"
+        ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.tack.ios
+        TARGETED_DEVICE_FAMILY: "1,2"
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UIStatusBarStyle: ""
+        CODE_SIGN_ENTITLEMENTS: Tack/Tack.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+    entitlements:
+      path: Tack/Tack.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.app.tack.shared
+
+  TackWidget:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: TackWidget
+      - path: Tack/Models
+    info:
+      path: TackWidget/Info.plist
+      properties:
+        CFBundleDisplayName: Tack
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: en
+        CFBundleExecutable: $(EXECUTABLE_NAME)
+        CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
+        CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.tack.ios.widget
+        CODE_SIGN_ENTITLEMENTS: TackWidget/TackWidget.entitlements
+        SKIP_INSTALL: YES
+    entitlements:
+      path: TackWidget/TackWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.app.tack.shared
+
+  TackUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: TackUITests
+    dependencies:
+      - target: Tack
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.tack.ios.uitests
+        TEST_TARGET_NAME: Tack
+
+schemes:
+  Tack:
+    build:
+      targets:
+        Tack: all
+        TackWidget: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - TackUITests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+
+# Note: Native macOS support (universal target sharing the same UI) is
+# tracked under v1.1 — see TODO.md. v1.0 ships iPhone + iPad first, mirroring
+# the PitWall v1.0 launch plan.
