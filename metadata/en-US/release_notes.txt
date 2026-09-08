@@ -1,13 +1,12 @@
 v1.0 — Initial release
 
-A native task app for iPhone and iPad with bidirectional Notion and Obsidian sync, three interactive Home Screen widgets, and natural-language quick add.
+A native task app for iPhone and iPad with bidirectional Obsidian sync, three interactive Home Screen widgets, and natural-language quick add.
 
 What's inside:
 - Today, Inbox, Lists, Stats, Settings
 - Quick Add with natural-language parsing (#tag, !priority, tomorrow 5pm, in 3 days)
 - Home Screen widgets: Today, Inbox, Stats (small, medium, large)
 - AppIntents: Add, Complete, Quick Capture (Siri, Shortcuts, share sheet)
-- Notion OAuth PKCE + bidirectional sync
-- Obsidian vault folder + YAML frontmatter round-trip
+- Obsidian vault folder with YAML frontmatter round-trip
 - Streak counter and 14-day completion chart
 - Six locales: English, Spanish, French, German, Italian, Brazilian Portuguese

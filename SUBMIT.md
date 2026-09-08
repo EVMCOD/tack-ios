@@ -8,28 +8,17 @@ This is the one-page playbook for shipping **Tack**. Run through it once and you
 
 | Scenario | ETA |
 |---|---|
-| Compiled and shipped (skip optional steps) | ~30 min of your time + Apple review queue |
+| Compiled and shipped | ~15 min of your time + Apple review queue |
 | Polished: TestFlight round + screenshots + ASO polish | ~3 hours |
 
 ---
 
-## Pre-flight (you, ~15 minutes)
+## Pre-flight (you, ~10 minutes)
 
 ```bash
 cd ~/tack-ios
 
-# 1. Validation gate — ensures xcodegen + build + privacy manifest + metadata are green
-./scripts/lint.sh
-
-# 2. Notion (only if you want the integration live before launch)
-#    - Create an integration at https://www.notion.so/profile/integrations
-#    - Set its OAuth redirect URI to:   tack://oauth/notion
-#    - Copy the client_id
-#    - Replace REPLACE_WITH_YOUR_NOTION_CLIENT_ID in
-#      Tack/Integrations/Notion/NotionAuthService.swift
-
-# 3. Privacy manifest — already present
-ls Tack/PrivacyInfo.xcprivacy
+./scripts/lint.sh    # build + privacy plist + metadata all green
 ```
 
 Checklist:
@@ -38,8 +27,11 @@ Checklist:
 - [ ] App Group `group.app.tack.shared` registered for both bundle + widget
 - [ ] Distribution certificate in your Keychain
 - [ ] Provisioning profile: *iOS App Store* for `app.tack.ios`
-- [ ] (Optional) App-Specific password for Apple ID (`apple.com → Apple ID → Sign-In & Security`)
-- [ ] (Optional) Notion integration ID pasted into the Swift file
+- [ ] (Optional) App-Specific password for Apple ID (`appleid.apple.com → Sign-In & Security`)
+
+Tack v1.0 ships with **one integration** (Obsidian). No third-party OAuth setup is
+required to ship — the Obsidian integration is opt-in via a folder picker inside the
+app. The Notion OAuth client_id placeholder was removed for v1.0.
 
 ---
 
@@ -49,8 +41,6 @@ Checklist:
 
 ```bash
 brew install xcodegen fastlane
-# xcpretty is optional but pretty:
-sudo gem install xcpretty
 ```
 
 ### 2) Capture screenshots
@@ -61,10 +51,7 @@ sudo gem install xcpretty
 ```
 
 `snapshot` boots a simulator, runs the app, and drives it through the on-device
-scenarios in `fastlane/SnapshotFile`. Produces three device lines (iPhone 17 Pro,
-iPhone Air, and one more if you add it).
-
-Re-run any time you change UI.
+scenarios in `fastlane/SnapshotFile`.
 
 ### 3) Validate everything is green
 
@@ -76,10 +63,10 @@ Re-run any time you change UI.
 ### 4) Archive for App Store
 
 ```bash
-./scripts/archive.sh           # → ./build/Tack.ipa
+./scripts/archive.sh           # → ./build/Tack.xcarchive + Tack.ipa
 ```
 
-The first run uses `--exportOptions.plist`. If you don't have one yet:
+First run uses `--exportOptions.plist`. If you don't have one yet:
 
 ```bash
 cat > build/exportOptions.plist <<'EOF'
@@ -105,7 +92,7 @@ EOF
 fastlane spaceauth
 # OR via env
 export APPLE_ID_FOR_TACK=valerosenrique@gmail.com
-export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=<from appleid.apple.com>
+export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=***  # appleid.apple.com>
 ```
 
 ### 6) Upload (no submit-for-review yet)
@@ -117,12 +104,12 @@ fastlane ios upload
 ```
 
 `fastlane ios upload` reads `metadata/<locale>/` for screenshots, name, subtitle,
-keywords, description, release notes. It also uploads the .ipa. Does NOT click
+keywords, description, release notes. It also uploads the `.ipa`. Does NOT click
 Submit for Review — you do that from App Store Connect to inspect the diff.
 
 ### 7) Verify on App Store Connect
 
-https://appstoreconnect.apple.com → **Tack** → TestFlight / App Store Versions → 1.0
+[App Store Connect → Tack](https://appstoreconnect.apple.com)
 
 Walk through every tab (Versions, App Store, Pricing). Confirm:
 - App icon preview looks right (the small chip in the upper left)
@@ -164,12 +151,12 @@ bundle. Run once, then come back to the pre-flight checklist.
 
 | Symptom | Fix |
 |---|---|
-| `git push` rejected (archivos huge) | .gitignore excludes build/. Ensure `xcodegen generate` and you don't commit `Tack.xcodeproj`. |
+| `git push` rejected | .gitignore excludes build/. Ensure `xcodegen generate` and that you don't commit `Tack.xcodeproj`. |
 | `xcodebuild` says `code signing failed` | Re-attach provisioning profile in Xcode → Signing & Capabilities → click Profile. |
-| `fastlane ios upload` says "You have no team" | `fastlane spaceauth` to re-auth, or set `FASTLANE_TEAM_ID` env. |
-| App rejected on Guideline 5.1.1 (Privacy) | `PrivacyInfo.xcprivacy` already covers the APIs we touch. If they ask for a privacy FAQ URL during review, provide one (a public site). |
-| App rejected on Guideline 2.1 (crash on launch) | Check Crash logs in App Store Connect. Likely a SwiftData migration issue — make sure you incremented the schema or wiped the store. |
-| App Store Connect: "Missing Compliance" | Answer "No" for Uses Third-Party SDK / Tracking / Encryption. Hit Save. |
+| `fastlane ios upload` says "You have no team" | `fastlane spaceauth` to re-auth, or set `FASTLANE_TEAM_ID`. |
+| App rejected on Guideline 5.1.1 (Privacy) | `PrivacyInfo.xcprivacy` covers all declared reason APIs. If they ask for a privacy FAQ URL, point to a public site. |
+| App rejected on Guideline 2.1 (crash on launch) | Check Crash logs in App Store Connect. Likely a SwiftData migration issue — increment schema or wipe store. |
+| App Store Connect: "Missing Compliance" | Answer "No" for Tracking / Encryption. Save. |
 
 ---
 
@@ -186,11 +173,11 @@ Once Apple notifies you the app is `READY_FOR_SALE`:
 
 ## Reference
 
-- `~/tack-ios/scripts/archive.sh` — wrapper around xcodebuild archive + exportOptions
-- `~/tack-ios/scripts/submit.sh` — wrapper around `fastlane ios upload`
-- `~/tack-ios/scripts/screenshot.sh` — wrapper around `fastlane ios screenshots`
-- `~/tack-ios/scripts/lint.sh` — gate check (build + privacy + metadata)
-- `~/tack-ios/fastlane/Fastfile` — `ship` lane chains everything
-- `~/tack-ios/metadata/<locale>/` — App Store Connect copy in 6 languages
-- `~/tack-ios/Tack/PrivacyInfo.xcprivacy` — required as of Xcode 15
+- `scripts/archive.sh` — wrapper around xcodebuild archive + exportOptions
+- `scripts/submit.sh` — wrapper around `fastlane ios upload`
+- `scripts/screenshot.sh` — wrapper around `fastlane ios screenshots`
+- `scripts/lint.sh` — gate check (build + privacy + metadata)
+- `fastlane/Fastfile` — `ship` lane chains everything
+- `metadata/<locale>/` — App Store Connect copy in 6 languages
+- `Tack/PrivacyInfo.xcprivacy` — required as of Xcode 15
 - `~/Documents/Obsidian/OC/projects/tack.md` — daily tracker

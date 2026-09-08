@@ -2,13 +2,16 @@ import Foundation
 import SwiftData
 import SwiftUI
 
-/// Single coordinator wiring every integration together. App-level facade so views
+/// Coordinator for every external integration. App-level facade so views
 /// never import the integration modules directly.
+///
+/// v1.0 ships with **Obsidian only** (vault folder + YAML-frontmatter MD).
+/// Notion was planned but the user opted to defer it post-launch —
+/// keep Notion-agnostic code paths so adding it back in v1.1 is mechanical.
 @MainActor
 public final class IntegrationHub: ObservableObject {
     public static let shared = IntegrationHub()
 
-    @Published public private(set) var notion: IntegrationState = .notConfigured
     @Published public private(set) var obsidian: IntegrationState = .notConfigured
     @Published public private(set) var lastSync: Date?
 
@@ -26,7 +29,6 @@ public final class IntegrationHub: ObservableObject {
         }
     }
 
-    private let notionSync = NotionSyncService.shared
     private let obsidianSync = ObsidianSyncService.shared
 
     private init() {
@@ -34,8 +36,7 @@ public final class IntegrationHub: ObservableObject {
     }
 
     public func refreshState() {
-        notion    = notionSync.isAuthorized && notionSync.isConfigured ? .ok : (notionSync.isConfigured ? .disconnected : .notConfigured)
-        obsidian  = obsidianSync.isConfigured ? .ok : .notConfigured
+        obsidian = obsidianSync.isConfigured ? .ok : .notConfigured
     }
 
     /// Called when the app becomes active.
@@ -43,68 +44,36 @@ public final class IntegrationHub: ObservableObject {
         Task { await syncAll() }
     }
 
-    /// Called when app enters background.
-    public func scheduleBackgroundRefresh() {
-        // BGTaskScheduler hookup goes here. Stubbed for v1.
-    }
+    /// Hook for `BGTaskScheduler` in v1.1.
+    public func scheduleBackgroundRefresh() {}
 
-    /// Fan-out sync for both integrations. Pull/push in parallel.
+    /// Pull + push for every configured integration.
     public func syncAll() async {
-        await withTaskGroup(of: Void.self) { group in
-            group.addTask { @MainActor in
-                self.notion = .syncing
-                await NotionSyncService.shared.sync(container: TaskStore.shared.container)
-                self.notion = self.notionSync.isAuthorized ? .ok : .disconnected
-            }
-            group.addTask { @MainActor in
-                self.obsidian = .syncing
-                ObsidianSyncService.shared.sync(container: TaskStore.shared.container)
-                self.obsidian = self.obsidianSync.isConfigured ? .ok : .notConfigured
-            }
+        if obsidianSync.isConfigured {
+            obsidian = .syncing
+            obsidianSync.sync(container: TaskStore.shared.container)
+            obsidian = obsidianSync.isConfigured ? .ok : .notConfigured
         }
         lastSync = .now
     }
 
     /// Called from QuickAdd when a new task is created locally — push only.
     public func propagateToIntegrations(_ task: TaskItem) async {
-        // Notion: only if configured; Obsidian: write file always if vault is set.
-        if notionSync.isConfigured {
-            await NotionSyncService.shared.sync(container: TaskStore.shared.container)
-        }
         if obsidianSync.isConfigured {
-            ObsidianSyncService.shared.sync(container: TaskStore.shared.container)
+            obsidianSync.sync(container: TaskStore.shared.container)
         }
     }
 
-    // Notion helpers (forwarded for the Settings UI)
-    public func notionAuthURL() async -> URL? {
-        await notionSync.buildAuthURL()
-    }
+    // MARK: - Obsidian
 
-    public func notionAuthorize(_ url: URL) async {
-        _ = await notionSync.authorize(url)
-        refreshState()
-    }
-
-    public func notionPickDatabase(_ id: String) {
-        notionSync.pickDatabase(id)
-        refreshState()
-    }
-
-    public func notionDisconnect() {
-        notionSync.disconnect()
-        refreshState()
-    }
-
-    // Obsidian helpers
     public func setObsidianVault(_ url: URL) {
         do {
             try obsidianSync.pickVault(url)
+            refreshState()
         } catch {
             TKLog.obsidian.error("Vault set failed: \(error.localizedDescription)")
             obsidian = .error(error.localizedDescription)
         }
-        refreshState()
     }
 
     public func clearObsidianVault() {

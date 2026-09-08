@@ -25,8 +25,8 @@ struct OnboardingView: View {
         .init(
             system: "arrow.triangle.2.circlepath",
             tint: .indigo,
-            title: "Sync with Notion & Obsidian",
-            subtitle: "Pick a Notion database or your Obsidian vault. Tack keeps them in step.",
+            title: "Sync with Obsidian",
+            subtitle: "Pick your Obsidian vault. Tack keeps each task as a clean markdown file with YAML frontmatter, so other tools can read them too.",
             cta: "Get started"
         )
     ]

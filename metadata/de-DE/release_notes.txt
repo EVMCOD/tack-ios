@@ -1,13 +1,12 @@
 v1.0 — Erstveröffentlichung
 
-Eine native Aufgaben-App für iPhone und iPad mit bidirektionaler Notion- und Obsidian-Synchronisation, drei interaktiven Widgets und Schnellerfassung per natürlicher Sprache.
+Eine native Aufgaben-App für iPhone und iPad mit bidirektionaler Obsidian-Synchronisation, drei interaktiven Widgets und Schnellerfassung per natürlicher Sprache.
 
 Was drin ist:
 - Heute, Posteingang, Listen, Stats, Einstellungen
 - Quick Add mit Sprachparser (#Tag, !Priorität, morgen 17 Uhr, in 3 Tagen)
 - Widgets: Today, Inbox, Stats (klein, mittel, groß)
 - AppIntents: Hinzufügen, Erledigen, Schnellerfassung (Siri, Shortcuts, Teilen-Menü)
-- Notion OAuth PKCE + bidirektionale Synchronisation
-- Obsidian-Vault + YAML-Frontmatter-Roundtrip
+- Obsidian-Vault mit YAML-Frontmatter-Roundtrip
 - Streak-Zähler und 14-Tage-Diagramm
 - Sechs Sprachen: Englisch, Spanisch, Französisch, Deutsch, Italienisch, brasilianisches Portugiesisch

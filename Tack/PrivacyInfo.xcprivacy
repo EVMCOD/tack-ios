@@ -14,8 +14,8 @@
          Apple uses to audit privacy. Add only what your code calls. -->
     <key>NSPrivacyAccessedAPITypes</key>
     <array>
-        <!-- Disk space: needed to know how much room is left for SwiftData store,
-             vault, and Notion caches (1F66.1 = Required to extend to free space). -->
+        <!-- Disk space: needed to know how much room is left for SwiftData store
+             and Obsidian vault files (E174.1 = Required to extend to free space). -->
         <dict>
             <key>NSPrivacyAccessedAPIType</key>
             <string>NSPrivacyAccessedAPIDiskSpace</string>

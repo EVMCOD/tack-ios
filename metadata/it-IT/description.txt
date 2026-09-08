@@ -1,10 +1,10 @@
-Tack è un'app di attività focalizzata e adattiva per iPhone e iPad. Unisce un flusso quotidiano curato a una sincronizzazione nativa con Notion e Obsidian — le tue attività vivono dove pensi davvero.
+Tack è un'app di attività focalizzata e adattiva per iPhone e iPad. Unisce un flusso quotidiano curato a una sincronizzazione nativa con Obsidian — le tue attività vivono dove pensi davvero.
 
 CATTURA VELOCE
-Digita naturale. Tack interpreta le tue parole: "Comprare il latte domani 17 #spesa" diventa un'attività strutturata — data, tag e priorità, dedotti in millisecondi. Aggiungi dalla schermata di blocco, Siri, il foglio di condivisione o il quick add dell'app.
+Digita naturale. Tack interpreta le tue parole: "Comprare il latte domani 17 #spesa" diventa un'attività strutturata — data, tag e priorità, dedotti in millisecondi. Aggiungi da Siri, dal foglio di condivisione o dal quick add dell'app.
 
 OGGI, POSTA, ELENCHI, STATS
-Cinque viste, zero attrito. Oggi mostra cosa è davvero in scadenza. La Posta in arrivo trattiene le catture grezze. Gli Elenchi sono le tue raggruppazioni. Stats gamifica la pratica con un contatore di streak e un grafico a quattordici giorni.
+Quattro viste, zero attrito. Oggi mostra cosa è davvero in scadenza. La Posta in arrivo trattiene le catture grezze. Gli Elenchi sono le tue raggruppazioni. Stats gamifica la pratica con un contatore di streak e un grafico a quattordici giorni.
 
 WIDGETS
 Today, Inbox e Stats — piccolo, medio e grande. Tocca per completare. Tieni premuto per saltare alla vista. Si aggiornano ogni ora e a ogni modifica.
@@ -14,8 +14,8 @@ SIRI, SCORCIATOIE, FOGLIO DI CONDIVISIONE
 "Segna come fatta in Tack: portare fuori la spazzatura"
 Un'intent Quick Capture per il Foglio di condivisione. Tre intent in dotazione; altri in arrivo.
 
-NOTION, OBSIDIAN, NIENT'ALTRO
-Un unico motore di sincronizzazione deciso — parla con Notion quando le tue attività vivono in un database, o con il tuo vault Obsidian quando vivono in markdown. Bidirezionale, tollerante ai guasti, frontmatter YAML su ogni file. Nessun lock-in: le tue attività sono markdown valido e righe Notion valide prima che Tack le tocchi.
+OBSIDIAN, NIENT'ALTRO
+Un unico motore di sincronizzazione deciso — scegli il tuo vault Obsidian e Tack mantiene ogni attività come un file markdown pulito con frontmatter YAML. Bidirezionale, tollerante ai guasti, senza lock-in. Le tue attività sono markdown valido prima che Tack le tocchi, e lo restano quando disattivi l'integrazione.
 
 DETTAGLI DI DESIGN
 - Temi chiaro e scuro con token semantici (la famiglia `TK`)

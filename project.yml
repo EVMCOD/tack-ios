@@ -71,9 +71,6 @@ targets:
           - UIInterfaceOrientationLandscapeRight
           - UIInterfaceOrientationPortraitUpsideDown
         UIUserInterfaceStyle: ""
-        CFBundleURLTypes:
-          - CFBundleURLName: app.tack
-            CFBundleURLSchemes: [tack]
         NSUserActivityTypes:
           - AddTaskIntent
           - CompleteTaskIntent

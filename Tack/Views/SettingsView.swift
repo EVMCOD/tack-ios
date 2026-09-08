@@ -20,20 +20,8 @@ struct SettingsView: View {
 
     var body: some View {
         List {
-            Section("Integrations") {
-                NavigationLink {
-                    NotionSettingsView()
-                } label: {
-                    IntegrationRow(
-                        name: "Notion",
-                        sfSymbol: "doc.text.magnifyingglass",
-                        state: integrations.notion,
-                        accent: .purple
-                    )
-                }
-                NavigationLink {
-                    ObsidianSettingsView()
-                } label: {
+            Section {
+                NavigationLink(destination: ObsidianSettingsView()) {
                     IntegrationRow(
                         name: "Obsidian",
                         sfSymbol: "diamond",
@@ -41,6 +29,10 @@ struct SettingsView: View {
                         accent: .indigo
                     )
                 }
+            } header: {
+                Text("Integrations")
+            } footer: {
+                Text("Tack stores each task as a markdown file inside a `tack/` folder at the root of the vault you pick. Files use YAML frontmatter so other tools — Dataview, Templater, Scripts — can read them.")
             }
 
             Section {
@@ -69,7 +61,7 @@ struct SettingsView: View {
             Section("About") {
                 LabeledContent("Version", value: "1.0.0 (build 1)")
                 LabeledContent("Bundle", value: "app.tack.ios")
-                LabeledContent("Engine", value: "SwiftData + Notion + Obsidian")
+                LabeledContent("Engine", value: "SwiftData + Obsidian")
             }
         }
         .navigationTitle("Settings")

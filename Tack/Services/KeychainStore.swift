@@ -5,7 +5,6 @@ import Security
 /// Used for Notion OAuth token, vault bookmarks serialized as Data, etc.
 public enum KeychainStore {
     public enum Service: String {
-        case notionOAuth = "app.tack.notion.oauth"
         case vaultBookmark = "app.tack.obsidian.vault"
     }
 

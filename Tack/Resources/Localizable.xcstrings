@@ -191,12 +191,12 @@
     "Onboarding.SyncTitle" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sync with Notion & Obsidian" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sincroniza con Notion y Obsidian" } },
-        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Synchronisation avec Notion et Obsidian" } },
-        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sync mit Notion und Obsidian" } },
-        "it" : { "stringUnit" : { "state" : "translated", "value" : "Sincronizza con Notion e Obsidian" } },
-        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Sincronize com Notion e Obsidian" } }
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sync with Obsidian" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sincroniza con Obsidian" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Synchronisation avec Obsidian" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sync mit Obsidian" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Sincronizza con Obsidian" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Sincronize com Obsidian" } }
       }
     },
     "Streak.DaysLabel" : {

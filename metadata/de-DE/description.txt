@@ -1,10 +1,10 @@
-Tack ist eine fokussierte, adaptive Aufgaben-App für iPhone und iPad. Sie verbindet einen präzisen Alltags-Workflow mit nativer Notion- und Obsidian-Synchronisation — deine Aufgaben leben dort, wo du tatsächlich denkst.
+Tack ist eine fokussierte, adaptive Aufgaben-App für iPhone und iPad. Sie verbindet einen präzisen Alltags-Workflow mit nativer Obsidian-Synchronisation — deine Aufgaben leben dort, wo du tatsächlich denkst.
 
 SCHNELL ERFASSEN
-Tippe natürlich. Tack interpretiert deine Worte: „Milch kaufen morgen 17 Uhr #einkauf" wird zu einer strukturierten Aufgabe — Datum, Tags und Priorität in Millisekunden. Erfasse vom Sperrbildschirm, Siri, dem Teilen-Menü oder dem Quick-Add der App.
+Tippe natürlich. Tack interpretiert deine Worte: „Milch kaufen morgen 17 Uhr #einkauf" wird zu einer strukturierten Aufgabe — Datum, Tags und Priorität in Millisekunden. Erfasse von Siri, dem Teilen-Menü oder dem Quick-Add der App.
 
 HEUTE, POSTEINGANG, LISTEN, STATS
-Fünf Ansichten, null Reibung. Heute zeigt, was wirklich fällig ist. Der Posteingang sammelt rohe Erfassungen. Listen sind deine eigenen Gruppierungen. Stats gamifiziert die Routine mit Streak-Zähler und 14-Tage-Diagramm.
+Vier Ansichten, null Reibung. Heute zeigt, was wirklich fällig ist. Der Posteingang sammelt rohe Erfassungen. Listen sind deine eigenen Gruppierungen. Stats gamifiziert die Routine mit Streak-Zähler und 14-Tage-Diagramm.
 
 WIDGETS
 Today, Inbox und Stats — klein, mittel und groß. Tippen zum Erledigen. Lang drücken für den Sprung in die Ansicht. Sie aktualisieren sich jede Stunde und bei jeder Änderung.
@@ -14,8 +14,8 @@ SIRI, SHORTCUTS, TEILEN-MENÜ
 „In Tack als erledigt markieren: Müll rausbringen"
 Eine Quick-Capture-Intent für das Teilen-Menü. Drei Intents werden ausgeliefert; weitere folgen.
 
-NOTION, OBSIDIAN, NICHTS ANDERES
-Eine einzige, meinungsstarke Sync-Engine — sprich mit Notion, wenn deine Aufgaben in einer Datenbank leben, oder mit deinem Obsidian-Vault, wenn sie in Markdown leben. Bidirektional, fehlertolerant, YAML-Frontmatter in jeder Datei. Kein Lock-in: deine Aufgaben sind gültiges Markdown und gültige Notion-Zeilen, bevor Tack sie anfasst.
+OBSIDIAN, NICHTS ANDERES
+Eine einzige, meinungsstarke Sync-Engine — wähle deinen Obsidian-Vault und Tack hält jede Aufgabe als saubere Markdown-Datei mit YAML-Frontmatter bereit. Bidirektional, fehlertolerant, ohne Lock-in. Deine Aufgaben sind gültiges Markdown, bevor Tack sie anfasst, und bleiben es, wenn du die Integration deaktivierst.
 
 DESIGN-DETAILS
 - Helle und dunkle Themes mit semantischen Tokens (die `TK`-Familie)
