@@ -6,5 +6,6 @@ struct TackWidgetBundle: WidgetBundle {
     var body: some Widget {
         TodayWidget()
         InboxWidget()
+        StatsWidget()
     }
 }

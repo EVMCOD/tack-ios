@@ -2,12 +2,20 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject private var integrations: IntegrationHub
-    @State private var appearance: Appearance = .system
+    @StateObject private var settings = AppSettings.shared
 
-    enum Appearance: String, CaseIterable, Identifiable {
-        case system, light, dark
-        var id: String { rawValue }
-        var label: String { rawValue.capitalized }
+    private var appearanceBinding: Binding<String> {
+        Binding(
+            get: { settings.appearanceRaw },
+            set: { settings.setAppearance(AppSettings.Appearance(rawValue: $0) ?? .system) }
+        )
+    }
+
+    private var cloudSyncBinding: Binding<Bool> {
+        Binding(
+            get: { settings.enableCloudSync },
+            set: { settings.enableCloudSync = $0 }
+        )
     }
 
     var body: some View {
@@ -35,16 +43,33 @@ struct SettingsView: View {
                 }
             }
 
+            Section {
+                Toggle(isOn: cloudSyncBinding) {
+                    Label("iCloud sync (CloudKit)", systemImage: "icloud.fill")
+                }
+                LabeledContent("Last sync") {
+                    Text(integrations.lastSync?.formatted(date: .abbreviated, time: .shortened) ?? "Never")
+                        .foregroundStyle(TK.Palette.textMuted)
+                }
+            } header: {
+                Text("Sync")
+            } footer: {
+                Text("iCloud sync requires setting up the CloudKit container in your Apple Developer account. Available in v1.1.")
+            }
+
             Section("Appearance") {
-                Picker("Theme", selection: $appearance) {
-                    ForEach(Appearance.allCases) { Text($0.label).tag($0) }
+                Picker("Theme", selection: appearanceBinding) {
+                    ForEach(AppSettings.Appearance.allCases) { a in
+                        Text(a.label).tag(a.rawValue)
+                    }
                 }
                 .pickerStyle(.segmented)
             }
 
             Section("About") {
                 LabeledContent("Version", value: "1.0.0 (build 1)")
-                LabeledContent("Sync engine", value: "Local + Notion + Obsidian")
+                LabeledContent("Bundle", value: "app.tack.ios")
+                LabeledContent("Engine", value: "SwiftData + Notion + Obsidian")
             }
         }
         .navigationTitle("Settings")

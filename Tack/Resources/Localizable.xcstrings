@@ -1,0 +1,215 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "AppName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tack" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tack" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tack" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tack" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Tack" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Tack" } }
+      }
+    },
+    "Tab.Today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Today" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hoy" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Aujourd'hui" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Heute" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Oggi" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Hoje" } }
+      }
+    },
+    "Tab.Inbox" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Inbox" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Bandeja" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Boîte de réception" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Posteingang" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Posta in arrivo" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Caixa de entrada" } }
+      }
+    },
+    "Tab.Lists" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Lists" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Listas" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Listes" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Listen" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Elenchi" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Listas" } }
+      }
+    },
+    "Tab.Stats" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stats" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Stats" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Stats" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Stats" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Stats" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Stats" } }
+      }
+    },
+    "Tab.Settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Réglages" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Einstellungen" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Impostazioni" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes" } }
+      }
+    },
+    "Action.Cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cancelar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Annuler" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Abbrechen" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Annulla" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Cancelar" } }
+      }
+    },
+    "Action.Add" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Añadir" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ajouter" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Hinzufügen" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Aggiungi" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Adicionar" } }
+      }
+    },
+    "Action.Save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardar" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistrer" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Speichern" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Salva" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Salvar" } }
+      }
+    },
+    "NewTaskTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "New task" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Nueva tarea" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Nouvelle tâche" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Neue Aufgabe" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Nuova attività" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Nova tarefa" } }
+      }
+    },
+    "QuickAddPlaceholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Buy milk tomorrow 5pm #groceries" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Comprar leche mañana 17h #compras" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Acheter du lait demain 17h #courses" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Milch kaufen morgen 17 Uhr #einkauf" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Comprare il latte domani 17 #spesa" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Comprar leite amanhã 17h #compras" } }
+      }
+    },
+    "Status.Open" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Abierta" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ouverte" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Offen" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Aperta" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Aberta" } }
+      }
+    },
+    "Status.InProgress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "In Progress" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "En curso" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "En cours" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "In Arbeit" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "In corso" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Em andamento" } }
+      }
+    },
+    "Status.Done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Done" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hecha" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Terminée" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Erledigt" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Completata" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Concluída" } }
+      }
+    },
+    "EmptyState.Today" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clear skies. Nothing due today." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cielo despejado. Nada para hoy." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Ciel dégagé. Rien pour aujourd'hui." } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Klarer Himmel. Nichts für heute." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Cielo sereno. Niente per oggi." } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Céu limpo. Nada para hoje." } }
+      }
+    },
+    "Onboarding.CaptureTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Capture fast" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Captura rápido" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Capturez vite" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Schnell erfassen" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Acquisisci veloce" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Capture rápido" } }
+      }
+    },
+    "Onboarding.OrganizeTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Today. Inbox. Lists." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hoy. Bandeja. Listas." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Aujourd'hui. Boîte. Listes." } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Heute. Posteingang. Listen." } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Oggi. Posta. Elenchi." } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Hoje. Caixa. Listas." } }
+      }
+    },
+    "Onboarding.SyncTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sync with Notion & Obsidian" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sincroniza con Notion y Obsidian" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Synchronisation avec Notion et Obsidian" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Sync mit Notion und Obsidian" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Sincronizza con Notion e Obsidian" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Sincronize com Notion e Obsidian" } }
+      }
+    },
+    "Streak.DaysLabel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "days" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "días" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "jours" } },
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Tage" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "giorni" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "dias" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

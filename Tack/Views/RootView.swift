@@ -5,14 +5,31 @@ import SwiftData
 struct RootView: View {
     @EnvironmentObject private var store: TaskStore
     @EnvironmentObject private var integrations: IntegrationHub
+    @StateObject private var settings = AppSettings.shared
     @State private var selection: Tab = .today
     @State private var presentingQuickAdd = false
 
     enum Tab: Hashable {
-        case today, inbox, lists, settings
+        case today, inbox, lists, stats, settings
     }
 
     var body: some View {
+        Group {
+            if !settings.hasOnboarded {
+                OnboardingView {
+                    withAnimation(TK.Spring.gentle) {
+                        settings.hasOnboarded = true
+                    }
+                }
+            } else {
+                content
+            }
+        }
+        .preferredColorScheme(settings.appearance)
+    }
+
+    @ViewBuilder
+    private var content: some View {
         #if os(macOS)
         NavigationSplitView {
             sidebar
@@ -28,16 +45,19 @@ struct RootView: View {
         #else
         TabView(selection: $selection) {
             NavigationStack { TodayView() }
-                .tabItem { Label("Today", systemImage: "sun.max") }
+                .tabItem { Label("Today", systemImage: TK.Icon.today) }
                 .tag(Tab.today)
             NavigationStack { InboxView() }
-                .tabItem { Label("Inbox", systemImage: "tray") }
+                .tabItem { Label("Inbox", systemImage: TK.Icon.inbox) }
                 .tag(Tab.inbox)
             NavigationStack { ListsView() }
-                .tabItem { Label("Lists", systemImage: "list.bullet.rectangle") }
+                .tabItem { Label("Lists", systemImage: TK.Icon.lists) }
                 .tag(Tab.lists)
+            NavigationStack { StatsView() }
+                .tabItem { Label("Stats", systemImage: TK.Icon.stats) }
+                .tag(Tab.stats)
             NavigationStack { SettingsView() }
-                .tabItem { Label("Settings", systemImage: "gearshape") }
+                .tabItem { Label("Settings", systemImage: TK.Icon.settings) }
                 .tag(Tab.settings)
         }
         .sheet(isPresented: $presentingQuickAdd) {
@@ -56,11 +76,12 @@ struct RootView: View {
     #if os(macOS)
     private var sidebar: some View {
         List(selection: $selection) {
-            Label("Today",   systemImage: "sun.max").tag(Tab.today)
-            Label("Inbox",   systemImage: "tray").tag(Tab.inbox)
-            Label("Lists",   systemImage: "list.bullet.rectangle").tag(Tab.lists)
+            Label("Today",    systemImage: TK.Icon.today).tag(Tab.today)
+            Label("Inbox",    systemImage: TK.Icon.inbox).tag(Tab.inbox)
+            Label("Lists",    systemImage: TK.Icon.lists).tag(Tab.lists)
+            Label("Stats",    systemImage: TK.Icon.stats).tag(Tab.stats)
             Divider()
-            Label("Settings", systemImage: "gearshape").tag(Tab.settings)
+            Label("Settings", systemImage: TK.Icon.settings).tag(Tab.settings)
         }
         .listStyle(.sidebar)
         .safeAreaInset(edge: .bottom) {
@@ -82,6 +103,7 @@ struct RootView: View {
         case .today:    TodayView()
         case .inbox:    InboxView()
         case .lists:    ListsView()
+        case .stats:    StatsView()
         case .settings: SettingsView()
         }
     }
@@ -92,7 +114,7 @@ private struct QuickAddButton: View {
     let action: () -> Void
     var body: some View {
         Button(action: action) {
-            Image(systemName: "plus")
+            Image(systemName: TK.Icon.addBold)
                 .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(.white)
                 .frame(width: 56, height: 56)
