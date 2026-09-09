@@ -1,0 +1,14 @@
+v1.0 — Primo rilascio
+
+Un'app di attività nativa per iPhone, iPad e Mac con sincronizzazione bidirezionale con Obsidian, tre widget interattivi, voce nella barra dei menu del Mac e cattura rapida in linguaggio naturale.
+
+Cosa c'è dentro:
+- Oggi, Posta in arrivo, Elenchi, Stats, Impostazioni
+- Quick Add con parser in linguaggio naturale (#tag, !priorità, domani 17, in 3 giorni)
+- Widget (iPhone e iPad): Today, Inbox, Stats (piccolo, medio, grande)
+- Menu bar Quick Add su Mac
+- AppIntents: Aggiungi, Completa, Cattura rapida (Siri, Scorciatoie, foglio di condivisione)
+- Vault Obsidian con round-trip su frontmatter YAML
+- Contatore di streak e grafico a 14 giorni
+- Sei lingue: inglese, spagnolo, francese, tedesco, italiano, portoghese brasiliano
+- App Sandbox attivo su Mac

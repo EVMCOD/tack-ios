@@ -1,0 +1,26 @@
+Tack è un'app di attività focalizzata e adattiva, disponibile su iPhone, iPad e Mac. Unisce un flusso quotidiano curato a una sincronizzazione nativa con Obsidian — le tue attività vivono dove pensi davvero.
+
+CATTURA VELOCE
+Digita naturale. Tack interpreta le tue parole: "Comprare il latte domani 17 #spesa" diventa un'attività strutturata — data, tag e priorità, dedotti in millisecondi. Aggiungi da Siri, dalla barra dei menu del Mac, dal foglio di condivisione o dal quick add dell'app.
+
+OGGI, POSTA, ELENCHI, STATS
+Quattro viste, zero attrito. Oggi mostra cosa è davvero in scadenza. La Posta in arrivo trattiene le catture grezze. Gli Elenchi sono le tue raggruppazioni. Stats gamifica la pratica con un contatore di streak e un grafico a quattordici giorni.
+
+WIDGETS E MENU BAR
+Su iPhone e iPad: Today, Inbox e Stats — piccolo, medio e grande. Tocca per completare. Su Mac: una voce nella barra dei menu per il quick add senza lasciare l'app corrente.
+
+SIRI, SCORCIATOIE, FOGLIO DI CONDIVISIONE
+"Aggiungi a Tack: rileggere il doc di design"
+"Segna come fatta in Tack: portare fuori la spazzatura"
+Un'intent Quick Capture per il Foglio di condivisione. Tre intents in dotazione.
+
+OBSIDIAN, NIENT'ALTRO
+Un unico motore di sincronizzazione deciso — scegli il tuo vault Obsidian e Tack mantiene ogni attività come un file markdown pulito con frontmatter YAML. Bidirezionale, tollerante ai guasti, senza lock-in. Le tue attività sono markdown valido prima che Tack le tocchi, e lo restano quando disattivi l'integrazione.
+
+DESIGN
+- Temi chiaro e scuro con token semantici (la famiglia `TK`)
+- Sei lingue integrate: inglese, spagnolo, francese, tedesco, italiano, portoghese brasiliano
+- Su Mac: shell nativa con NavigationSplitView, Quick Add dalla barra dei menu, sandbox attivo
+- 100% offline. Le tue attività vivono in SwiftData; iCloud le salva automaticamente
+
+Tack è costruita con SwiftUI nativo e SwiftData. Nessun server. Nessuna pubblicità. Nessun tracking.

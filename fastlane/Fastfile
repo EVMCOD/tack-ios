@@ -1,11 +1,14 @@
 default_platform(:ios)
 
+# ─────────────────────────────────────────────────────────────────────
+# iOS App
+# ─────────────────────────────────────────────────────────────────────
 platform :ios do
   before_all do
     setup_ci if ENV["CI"]
   end
 
-  desc "Verify clean build + run UI tests"
+  desc "Verify clean build + run UI tests (iOS)"
   lane :test do
     scan(
       project: "Tack.xcodeproj",
@@ -17,7 +20,7 @@ platform :ios do
     )
   end
 
-  desc "Archive for App Store distribution"
+  desc "Archive for App Store distribution (iOS)"
   lane :archive do
     sync_code_signing(
       type: "app-store",
@@ -37,7 +40,7 @@ platform :ios do
     )
   end
 
-  desc "Capture App Store screenshots"
+  desc "Capture App Store screenshots (iOS)"
   lane :screenshots do
     capture_screenshots(
       project: "Tack.xcodeproj",
@@ -55,13 +58,13 @@ platform :ios do
         "es-ES",
         "fr-FR",
         "de-DE",
-        "it",
+        "it-IT",
         "pt-BR"
       ]
     )
   end
 
-  desc "Upload metadata + binary to App Store Connect (NOT submit)"
+  desc "Upload to App Store Connect (iOS, no submit)"
   lane :upload do
     deliver(
       app_identifier: "app.tack.ios",
@@ -84,7 +87,7 @@ platform :ios do
     )
   end
 
-  desc "Full ship lane: test → archive → screenshots → upload"
+  desc "Full ship lane (iOS): test → archive → screenshots → upload"
   lane :ship do
     test
     archive
@@ -92,7 +95,7 @@ platform :ios do
     upload
   end
 
-  desc "Register + push the bundle ID + widget extension + App Group"
+  desc "Register bundle ID + widget + App Group (one-time)"
   lane :register do
     produce(
       app_identifier: "app.tack.ios",
@@ -105,6 +108,101 @@ platform :ios do
   end
 
   error do |lane, exception|
-    UI.error("Lane #{lane} failed: #{exception.message}")
+    UI.error("iOS lane #{lane} failed: #{exception.message}")
+  end
+end
+
+# ─────────────────────────────────────────────────────────────────────
+# macOS App
+# ─────────────────────────────────────────────────────────────────────
+platform :mac do
+  before_all do
+    setup_ci if ENV["CI"]
+  end
+
+  desc "Verify clean build for macOS"
+  lane :test do
+    build_mac_app(
+      project: "Tack.xcodeproj",
+      scheme: "TackMac",
+      configuration: "Debug",
+      skip_codesigning: true,
+      skip_archive: true,
+      skip_package_pkg: true,
+      output_directory: "./build/mac-debug"
+    )
+  end
+
+  desc "Archive for App Store distribution (macOS, produces .pkg)"
+  lane :archive do
+    sync_code_signing(
+      type: "app-store",
+      app_identifier: "app.tack.macos",
+      readonly: false
+    )
+    gym(
+      project: "Tack.xcodeproj",
+      scheme: "TackMac",
+      configuration: "Release",
+      output_directory: "./build/mac",
+      output_name: "TackMac.pkg",
+      archive_path: "./build/TackMac.xcarchive",
+      export_method: "app-store",
+      include_symbols: false,
+      clean: true
+    )
+  end
+
+  desc "Capture App Store screenshots (macOS — manual flow)"
+  lane :screenshots do
+    UI.important("macOS screenshots are captured manually — see scripts/mac-screenshot.sh")
+    sh("bash ./scripts/mac-screenshot.sh")
+  end
+
+  desc "Upload to App Store Connect (macOS, no submit)"
+  lane :upload do
+    deliver(
+      app_identifier: "app.tack.macos",
+      username: ENV["APPLE_ID_FOR_TACK"] || "valerosenrique@gmail.com",
+      team_id: "KADHS6P8PY",
+      pkg: "./build/mac/TackMac.pkg",
+      metadata_path: "./metadata",
+      screenshots_path: "./build/screenshots/mac",
+      skip_binary_upload: false,
+      skip_screenshots: false,
+      skip_metadata: false,
+      skip_app_version_update: false,
+      submit_for_review: false,
+      automatic_release: false,
+      precheck_include_in_app_purchases: false,
+      clean_screenshots: true,
+      force: true,
+      run_precheck_before_submit: true,
+      reject_if_possible: true
+    )
+  end
+
+  desc "Full ship lane (macOS): test → archive → screenshots → upload"
+  lane :ship do
+    test
+    archive
+    screenshots
+    upload
+  end
+
+  desc "Register macOS bundle ID + App Group (one-time)"
+  lane :register do
+    produce(
+      app_identifier: "app.tack.macos",
+      app_name: "Tack for Mac",
+      language: "en-US",
+      enable_services: {
+        app_group: :on
+      }
+    )
+  end
+
+  error do |lane, exception|
+    UI.error("macOS lane #{lane} failed: #{exception.message}")
   end
 end
