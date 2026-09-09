@@ -10,7 +10,7 @@ cd "$(dirname "$0")/.."
 
 DEVICE="${DEVICE:-iPhone 17 Pro Max}"
 OUT="build/screenshots"
-LOCALES=("en:en_US:en-US" "es:es_ES:es-ES" "fr:fr_FR:fr-FR" "de:de_DE:de-DE" "it:it_IT:it-IT" "pt-BR:pt_BR:pt-BR")
+LOCALES=("en:en_US:en-US" "es:es_ES:es-ES" "fr:fr_FR:fr-FR" "de:de_DE:de-DE" "it:it_IT:it" "pt-BR:pt_BR:pt-BR")
 [[ $# -gt 0 ]] && LOCALES=("$@")
 
 UDID="$(xcrun simctl list devices available -j | python3 -c "

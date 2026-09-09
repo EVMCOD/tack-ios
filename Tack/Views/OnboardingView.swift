@@ -33,6 +33,7 @@ struct OnboardingView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            #if os(iOS)
             TabView(selection: $page) {
                 ForEach(0..<slides.count, id: \.self) { idx in
                     slideView(slides[idx])
@@ -40,6 +41,39 @@ struct OnboardingView: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+            #else
+            // macOS: stacked carousel — prev / current / next with paging buttons.
+            HStack(spacing: TK.Spacing.lg) {
+                Button {
+                    withAnimation(TK.Spring.snappy) { page = max(0, page - 1) }
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.title3.weight(.semibold))
+                        .frame(width: 36, height: 36)
+                        .background(Circle().fill(TK.Palette.surfaceHigh))
+                        .foregroundStyle(TK.Palette.textStrong)
+                }
+                .buttonStyle(.plain)
+                .disabled(page == 0)
+                .opacity(page == 0 ? 0.3 : 1)
+
+                slideView(slides[page])
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                Button {
+                    withAnimation(TK.Spring.snappy) { page = min(slides.count - 1, page + 1) }
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .font(.title3.weight(.semibold))
+                        .frame(width: 36, height: 36)
+                        .background(Circle().fill(slides[page].tint))
+                        .foregroundStyle(.white)
+                }
+                .buttonStyle(.plain)
+                .disabled(page == slides.count - 1)
+            }
+            .padding(.horizontal, TK.Spacing.xl)
+            #endif
 
             pageDots
                 .padding(.vertical, TK.Spacing.md)

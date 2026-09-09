@@ -2,7 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- No user tracking, no tracking domains, no data collection -->
+    <!-- Tack is fully offline: no accounts, no network requests, no analytics
+         and no third-party SDKs. Nothing is collected, so the collected-data
+         array is empty — and it must keep telling exactly the same story as
+         the App Privacy answers in App Store Connect, which Apple compares. -->
     <key>NSPrivacyTracking</key>
     <false/>
     <key>NSPrivacyTrackingDomains</key>
@@ -10,48 +13,34 @@
     <key>NSPrivacyCollectedDataTypes</key>
     <array/>
 
-    <!-- Reason API categories we touch. Each entry declares an "API reason code"
-         Apple uses to audit privacy. Add only what your code calls. -->
+    <!-- Required-reason APIs. Only what the code actually calls: an earlier
+         version of this file also declared DiskSpace and SystemBootTime, which
+         nothing in the app touches.
+
+         The exact key and value spellings matter — Apple rejects the build
+         with ITMS-91056 and does not say which entry is wrong. It is
+         NSPrivacyAccessedAPITypeReasons (not …APIReasons), the categories are
+         NSPrivacyAccessedAPICategory… (not NSPrivacyAccessedAPI…), and the
+         UserDefaults reason is CA92.1 (CA1007 is not a valid code). -->
     <key>NSPrivacyAccessedAPITypes</key>
     <array>
-        <!-- Disk space: needed to know how much room is left for SwiftData store
-             and Obsidian vault files (E174.1 = Required to extend to free space). -->
+        <!-- AppSettings (@AppStorage) plus the first-launch demo-seed flag. -->
         <dict>
             <key>NSPrivacyAccessedAPIType</key>
-            <string>NSPrivacyAccessedAPIDiskSpace</string>
-            <key>NSPrivacyAccessedAPIReasons</key>
+            <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
             <array>
-                <string>E174.1</string>
+                <string>CA92.1</string>
             </array>
         </dict>
-        <!-- User defaults: only used by our AppSettings (@AppStorage) for theme +
-             onboarding flag. CA1007 = Access info from same app, per documentation. -->
+        <!-- ObsidianVault reads .contentModificationDateKey to decide which
+             side of the sync is newer. -->
         <dict>
             <key>NSPrivacyAccessedAPIType</key>
-            <string>NSPrivacyAccessedAPIUserDefaults</string>
-            <key>NSPrivacyAccessedAPIReasons</key>
-            <array>
-                <string>CA1007</string>
-            </array>
-        </dict>
-        <!-- File timestamp: reading vault metadata in the Obsidian sync engine.
-             C617.1 = Display to the user (lastModifiedDate). -->
-        <dict>
-            <key>NSPrivacyAccessedAPIType</key>
-            <string>NSPrivacyAccessedAPIFileTimestamp</string>
-            <key>NSPrivacyAccessedAPIReasons</key>
+            <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
             <array>
                 <string>C617.1</string>
-            </array>
-        </dict>
-        <!-- System boot time: not used today, left for future scheduled-refresh logic.
-             35F9.1 = Absolute time across launches. -->
-        <dict>
-            <key>NSPrivacyAccessedAPIType</key>
-            <string>NSPrivacyAccessedAPISystemBootTime</string>
-            <key>NSPrivacyAccessedAPIReasons</key>
-            <array>
-                <string>35F9.1</string>
             </array>
         </dict>
     </array>

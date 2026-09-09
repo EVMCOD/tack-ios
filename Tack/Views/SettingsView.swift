@@ -44,7 +44,7 @@ struct SettingsView: View {
 
 
             Section("About") {
-                LabeledContent("Version", value: "1.0.0 (build 3)")
+                LabeledContent("Version", value: "1.0.0 (build 4)")
                 LabeledContent("Bundle", value: "app.tack.ios")
                 LabeledContent("Engine", value: "SwiftData + Obsidian")
             }

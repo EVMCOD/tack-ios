@@ -82,7 +82,9 @@ struct QuickAddSheet: View {
             }
             .padding(TK.Spacing.lg)
             .navigationTitle("New task")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }

@@ -56,7 +56,9 @@ struct SearchView: View {
             }
         }
         .navigationTitle("Search")
+        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
         .background(TK.Palette.bgDeep.ignoresSafeArea())
         .onAppear { searchFocused = true }
     }

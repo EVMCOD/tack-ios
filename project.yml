@@ -3,6 +3,7 @@ options:
   bundleIdPrefix: app.tack
   deploymentTarget:
     iOS: "17.0"
+    macOS: "14.0"
   developmentLanguage: en
   groupSortPosition: top
   createIntermediateGroups: true
@@ -26,7 +27,7 @@ settings:
   base:
     SWIFT_VERSION: "5.10"
     MARKETING_VERSION: "1.0.0"
-    CURRENT_PROJECT_VERSION: "3"
+    CURRENT_PROJECT_VERSION: "4"
     DEVELOPMENT_TEAM: KADHS6P8PY
     CODE_SIGN_STYLE: Automatic
     SWIFT_STRICT_CONCURRENCY: minimal
@@ -39,6 +40,8 @@ settings:
     OTHER_SWIFT_FLAGS: "-Xfrontend -warn-long-function-bodies=300"
 
 targets:
+
+  # ─── iOS App ───────────────────────────────────────────────────
   Tack:
     type: application
     platform: iOS
@@ -92,6 +95,59 @@ targets:
         com.apple.security.application-groups:
           - group.app.tack.shared
 
+  # ─── macOS App ─────────────────────────────────────────────────
+  TackMac:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Tack
+    info:
+      path: TackMac/Info.plist
+      properties:
+        CFBundleDisplayName: Tack
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: en
+        CFBundleExecutable: $(EXECUTABLE_NAME)
+        CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
+        CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        LSApplicationCategoryType: public.app-category.productivity
+        NSHumanReadableCopyright: "© 2026"
+        NSPrincipalClass: NSApplication
+        NSMainStoryboardFile: ""
+        # App is single-window SwiftUI lifecycle — no storyboard.
+        NSUserActivityTypes:
+          - AddTaskIntent
+          - CompleteTaskIntent
+          - QuickCaptureIntent
+        # Permissions we'll explain in review notes
+        NSDesktopFolderUsageDescription: "Tack needs to read the Obsidian vault you pick to keep your tasks in sync."
+        NSDocumentsFolderUsageDescription: "Tack stores your tasks and the local SwiftData store inside your Documents folder."
+        NSRemovableVolumesUsageDescription: "Tack reads and writes markdown files inside your chosen Obsidian vault."
+        ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.tack.macos
+        CODE_SIGN_ENTITLEMENTS: TackMac/TackMac.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+        COMBINE_HIDPI_IMAGES: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: "AppIcon"
+        # macOS target runs as agent + GUI app
+        LSUIElement: NO
+    entitlements:
+      path: TackMac/TackMac.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.application-groups:
+          - group.app.tack.shared
+        com.apple.security.files.user-selected.read-write: true
+        com.apple.security.files.bookmarks.app-scope: true
+        com.apple.security.network.client: true
+        com.apple.security.files.downloads.read-write: false
+
+  # ─── Widget Extension (iOS only) ──────────────────────────────
   TackWidget:
     type: app-extension
     platform: iOS
@@ -125,6 +181,7 @@ targets:
         com.apple.security.application-groups:
           - group.app.tack.shared
 
+  # ─── UI Tests ──────────────────────────────────────────────────
   TackUITests:
     type: bundle.ui-testing
     platform: iOS
@@ -158,6 +215,22 @@ schemes:
     archive:
       config: Release
 
-# Note: Native macOS support (universal target sharing the same UI) is
-# tracked under v1.1 — see TODO.md. v1.0 ships iPhone + iPad first, mirroring
-# the PitWall v1.0 launch plan.
+  TackMac:
+    build:
+      targets:
+        TackMac: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+
+# Note: Native macOS target shares Tack/ sources with the iOS app via
+# `#if os(macOS)` branches throughout (RootView, ObsidianSettingsView).
+# Widget extension stays iOS-only — macOS Notification Center widgets are
+# tracked for v1.1.

@@ -44,7 +44,7 @@ App Store Connect content lives in `../metadata/<locale>/`:
 - `description.txt`  — full long description (max 4000 chars)
 - `release_notes.txt`— What's New for the current version (max 4000 chars)
 
-Supported locales mirror the in-app xcstrings: en-US, es-ES, fr-FR, de-DE, it-IT, pt-BR.
+Supported locales mirror the in-app xcstrings: en-US, es-ES, fr-FR, de-DE, it, pt-BR.
 
 After you tweak any of these, run `fastlane ios upload` to push.
 

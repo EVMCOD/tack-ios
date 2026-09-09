@@ -67,8 +67,10 @@ struct TodayView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .background(TK.Palette.bgDeep.ignoresSafeArea())
+        #if os(iOS)
         .navigationBarHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+        #endif
     }
 
     // MARK: - Hero
