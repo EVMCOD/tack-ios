@@ -4,13 +4,6 @@ struct SettingsView: View {
     @EnvironmentObject private var integrations: IntegrationHub
     @StateObject private var settings = AppSettings.shared
 
-    private var appearanceBinding: Binding<String> {
-        Binding(
-            get: { settings.appearanceRaw },
-            set: { settings.setAppearance(AppSettings.Appearance(rawValue: $0) ?? .system) }
-        )
-    }
-
     private var cloudSyncBinding: Binding<Bool> {
         Binding(
             get: { settings.enableCloudSync },
@@ -49,17 +42,9 @@ struct SettingsView: View {
                 Text("iCloud sync requires setting up the CloudKit container in your Apple Developer account. Available in v1.1.")
             }
 
-            Section("Appearance") {
-                Picker("Theme", selection: appearanceBinding) {
-                    ForEach(AppSettings.Appearance.allCases) { a in
-                        Text(a.label).tag(a.rawValue)
-                    }
-                }
-                .pickerStyle(.segmented)
-            }
 
             Section("About") {
-                LabeledContent("Version", value: "1.0.0 (build 1)")
+                LabeledContent("Version", value: "1.0.0 (build 2)")
                 LabeledContent("Bundle", value: "app.tack.ios")
                 LabeledContent("Engine", value: "SwiftData + Obsidian")
             }

@@ -25,7 +25,7 @@ struct RootView: View {
                 content
             }
         }
-        .preferredColorScheme(settings.appearance)
+        // Colour scheme is pinned to .dark in TackApp — see the note there.
     }
 
     @ViewBuilder

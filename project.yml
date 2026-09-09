@@ -26,7 +26,7 @@ settings:
   base:
     SWIFT_VERSION: "5.10"
     MARKETING_VERSION: "1.0.0"
-    CURRENT_PROJECT_VERSION: "1"
+    CURRENT_PROJECT_VERSION: "2"
     DEVELOPMENT_TEAM: KADHS6P8PY
     CODE_SIGN_STYLE: Automatic
     SWIFT_STRICT_CONCURRENCY: minimal
@@ -70,7 +70,6 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
           - UIInterfaceOrientationPortraitUpsideDown
-        UIUserInterfaceStyle: ""
         NSUserActivityTypes:
           - AddTaskIntent
           - CompleteTaskIntent
@@ -80,9 +79,11 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: app.tack.ios
+        "CODE_SIGN_STYLE[sdk=iphoneos*]": Manual
+        "CODE_SIGN_IDENTITY[sdk=iphoneos*]": "Apple Distribution: ENRIQUE VALEROS MURIANA (KADHS6P8PY)"
+        "PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]": "Tack App Store"
         TARGETED_DEVICE_FAMILY: "1,2"
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
-        INFOPLIST_KEY_UIStatusBarStyle: ""
         CODE_SIGN_ENTITLEMENTS: Tack/Tack.entitlements
         ENABLE_HARDENED_RUNTIME: YES
     entitlements:
@@ -113,6 +114,9 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: app.tack.ios.widget
+        "CODE_SIGN_STYLE[sdk=iphoneos*]": Manual
+        "CODE_SIGN_IDENTITY[sdk=iphoneos*]": "Apple Distribution: ENRIQUE VALEROS MURIANA (KADHS6P8PY)"
+        "PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]": "Tack Widget App Store"
         CODE_SIGN_ENTITLEMENTS: TackWidget/TackWidget.entitlements
         SKIP_INSTALL: YES
     entitlements:
@@ -133,6 +137,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: app.tack.ios.uitests
         TEST_TARGET_NAME: Tack
+        GENERATE_INFOPLIST_FILE: YES
 
 schemes:
   Tack:

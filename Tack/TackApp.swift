@@ -20,7 +20,11 @@ struct TackApp: App {
             RootView()
                 .environmentObject(store)
                 .environmentObject(integrations)
-                .preferredColorScheme(nil)   // Honor system; user can override in Settings.
+                // v1.0 is dark-only: every surface uses the fixed dark palette
+                // (TK.Palette.bgDeep et al) while text is adaptive, so a light
+                // scheme renders black-on-black. Light theme lands in v1.1.
+                // NOTE: this outer modifier overrides anything RootView sets.
+                .preferredColorScheme(.dark)
         }
         .modelContainer(store.container)
         .onChange(of: scenePhase) { _, newPhase in
