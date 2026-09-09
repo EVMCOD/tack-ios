@@ -6,8 +6,8 @@ import AppIntents
 struct TackApp: App {
     @StateObject private var store = TaskStore.shared
     @StateObject private var integrations = IntegrationHub.shared
+    @StateObject private var cmd = AppCommandBus.shared
     @Environment(\.scenePhase) private var scenePhase
-    @State private var showingQuickAdd = false
 
     init() {
         // Register AppIntents shortcut phrases as soon as possible.
@@ -17,6 +17,19 @@ struct TackApp: App {
     }
 
     var body: some Scene {
+        primaryScene
+        #if os(macOS)
+        MenuBarExtra {
+            MenuBarContent()
+                .environmentObject(store)
+        } label: {
+            Image(systemName: "checklist")
+        }
+        .menuBarExtraStyle(.window)
+        #endif
+    }
+
+    private var primaryScene: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(store)
@@ -37,18 +50,29 @@ struct TackApp: App {
                 break
             }
         }
-
         #if os(macOS)
-        // Menu-bar extra — Quick Add without leaving the current app.
-        // Hidden when onboarding isn't done so we don't show the bar item
-        // to brand-new users who haven't entered the app yet.
-        MenuBarExtra {
-            MenuBarContent()
-                .environmentObject(store)
-        } label: {
-            Image(systemName: "checklist")
+        .commands {
+            CommandGroup(replacing: .newItem) {
+                Button("New Task") { cmd.requestQuickAdd() }
+                    .keyboardShortcut("n", modifiers: .command)
+            }
+            CommandGroup(after: .pasteboard) {
+                Divider()
+                Button("Find…") { cmd.requestSearch() }
+                    .keyboardShortcut("f", modifiers: .command)
+            }
+            CommandGroup(replacing: .appSettings) {
+                Button("Settings…") { cmd.selectTab(4) }
+                    .keyboardShortcut(",", modifiers: .command)
+            }
+            CommandMenu("View") {
+                Button("Today")    { cmd.selectTab(0) }.keyboardShortcut("1", modifiers: .command)
+                Button("Inbox")    { cmd.selectTab(1) }.keyboardShortcut("2", modifiers: .command)
+                Button("Lists")    { cmd.selectTab(2) }.keyboardShortcut("3", modifiers: .command)
+                Button("Stats")    { cmd.selectTab(3) }.keyboardShortcut("4", modifiers: .command)
+                Button("Settings") { cmd.selectTab(4) }.keyboardShortcut("5", modifiers: .command)
+            }
         }
-        .menuBarExtraStyle(.window)
         #endif
     }
 }

@@ -6,8 +6,10 @@ struct RootView: View {
     @EnvironmentObject private var store: TaskStore
     @EnvironmentObject private var integrations: IntegrationHub
     @StateObject private var settings = AppSettings.shared
+    @StateObject private var cmd = AppCommandBus.shared
     @State private var selection: Tab = .today
     @State private var presentingQuickAdd = false
+    @State private var presentingSearch = false
 
     enum Tab: Hashable {
         case today, inbox, lists, stats, settings
@@ -25,7 +27,23 @@ struct RootView: View {
                 content
             }
         }
-        // Colour scheme is pinned to .dark in TackApp — see the note there.
+        .preferredColorScheme(settings.appearance)
+        // React to global menu / keyboard commands.
+        .onChange(of: cmd.quickAddRequestToken) { _, _ in presentingQuickAdd = true }
+        .onChange(of: cmd.searchRequestToken)   { _, _ in presentingSearch = true }
+        .onChange(of: cmd.selectedTab) { _, newValue in
+            switch newValue {
+            case 0: selection = .today
+            case 1: selection = .inbox
+            case 2: selection = .lists
+            case 3: selection = .stats
+            case 4: selection = .settings
+            default: break
+            }
+        }
+        #if os(macOS)
+        .searchable(text: .constant(""), isPresented: $presentingSearch, prompt: "Search tasks")
+        #endif
     }
 
     @ViewBuilder
