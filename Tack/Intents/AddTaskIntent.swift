@@ -9,7 +9,10 @@ import Foundation
 ///  - "Capture in Tack: buy milk #groceries !high"
 struct AddTaskIntent: AppIntent {
     static var title: LocalizedStringResource = "Add task"
-    static var description = IntentDescription("Adds a task to Tack from anywhere — Siri, Shortcuts, the share sheet. Natural language is parsed for due dates, tags, and priority.")
+    // NOTE: App Store processing rejects any App Intent description containing
+    // the word "Siri" (error 90626) — and fails the build silently, with no
+    // entry in App Store Connect. Keep the assistant unnamed here.
+    static var description = IntentDescription("Adds a task to Tack from anywhere — Shortcuts, the share sheet, voice. Natural language is parsed for due dates, tags, and priority.")
     static var openAppWhenRun: Bool = false
 
     @Parameter(title: "Title")
